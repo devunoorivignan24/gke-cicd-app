@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: us-central1-docker.pkg.dev/<YOUR_PROJECT_ID>/gke-repo/flask-app:latest
+        image: us-central1-docker.pkg.dev/gcp-devops-gke-project/gke-repo/flask-app:latest
         ports:
         - containerPort: 8080
