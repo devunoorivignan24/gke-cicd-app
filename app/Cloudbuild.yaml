@@ -1,0 +1,34 @@
+steps:
+# Step 1: Build Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    [
+      'build',
+      '-t',
+      'us-central1-docker.pkg.dev/$PROJECT_ID/gke-repo/flask-app:$SHORT_SHA',
+      '.'
+    ]
+
+# Step 2: Push image
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    [
+      'push',
+      'us-central1-docker.pkg.dev/$PROJECT_ID/gke-repo/flask-app:$SHORT_SHA'
+    ]
+
+# Step 3: Deploy to GKE
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    [
+      'set',
+      'image',
+      'deployment/flask-app',
+      'flask-app=us-central1-docker.pkg.dev/$PROJECT_ID/gke-repo/flask-app:$SHORT_SHA'
+    ]
+  env:
+    - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=gke-cluster'
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/gke-repo/flask-app:$SHORT_SHA'
