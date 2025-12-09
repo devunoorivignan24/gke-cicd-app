@@ -91,7 +91,6 @@ This includes:
 2. Cloud Build is triggered automatically
 3. Cloud Build Pipeline:
       - Build Docker image
-      - Tag with $SHORT_SHA
       - Push image → Artifact Registry
       - Patch GKE Deployment with new image
 4. Kubernetes performs Rolling Update
